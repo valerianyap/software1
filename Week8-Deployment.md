@@ -46,6 +46,63 @@ When the pipeline can run successfully, you can check if a new Docker image with
 
 If the pipeline fails, you can look at the output of each stage to fix the issues, before committing/pushing again.
 
+### Check Docker Image on Docker Hub
+To verify that your Docker image has been successfully pushed to Docker Hub, follow these steps:
+
+1. Log in to your Docker Hub account on the web (https://hub.docker.com/).
+2. Navigate to your profile by clicking on your username at the top right corner.
+3. Click on `Repositories` in the dropdown menu.
+4. You should see the repository you created earlier (e.g., `book_app_backend`). Click on it.
+5. Inside the repository, you should see the Docker image with the tag `latest` or the specific tag you used (e.g., `1.0.0`).
+
+If the image is present, it means the CI pipeline successfully pushed the Docker image to your Docker Hub repository.
+
+### What Happens After Running `docker build -t myapp .` in PowerShell
+When you run the command `docker build -t myapp .` in PowerShell, the following steps occur:
+
+1. **Dockerfile Parsing**: Docker reads the `Dockerfile` in the current directory (`.`) to understand the instructions for building the image.
+2. **Base Image Retrieval**: Docker pulls the base image specified in the `Dockerfile` from Docker Hub or another specified registry.
+3. **Layer Creation**: For each instruction in the `Dockerfile` (e.g., `RUN`, `COPY`, `ADD`), Docker creates a new layer in the image. Each layer represents a step in the build process.
+4. **Caching**: Docker uses cache to speed up the build process. If a layer has not changed since the last build, Docker reuses the cached layer.
+5. **Image Tagging**: Once the build process is complete, Docker tags the final image with the name `myapp`.
+6. **Image Storage**: The built image is stored locally on your machine and can be viewed using the `docker images` command.
+
+You can then run the image using `docker run myapp` to start a container based on the image you just built.
+
+### Commit Changes to Existing GitHub Repository
+To commit your changes from the Week 8 app progress to your existing GitHub repository from Week 3, follow these steps:
+
+1. **Open Terminal**: Open a terminal or PowerShell in the root directory of your Week 8 app.
+
+2. **Initialize Git (if not already initialized)**:
+   ```sh
+   git init
+   ```
+
+3. **Add Remote Repository**: Add your existing GitHub repository as a remote (replace `<your-repo-url>` with the URL of your Week 3 repository).
+   ```sh
+   git remote add origin <your-repo-url>
+   ```
+
+4. **Add Changes**: Stage all the changes you have made.
+   ```sh
+   git add .
+   ```
+
+5. **Commit Changes**: Commit the changes with a meaningful message.
+   ```sh
+   git commit -m "Add Week 8 app progress"
+   ```
+
+6. **Push Changes**: Push the changes to the existing GitHub repository.
+   ```sh
+   git push origin main
+   ```
+
+   If your default branch is not `main`, replace `main` with the appropriate branch name.
+
+By following these steps, your changes from Week 8 will be committed and pushed to your existing GitHub repository from Week 3.
+
 ### Optional: pull the Docker image and test locally
 If you have Docker Desktop running, you can pull the image that GitHub Workflow just created, and run a Docker container locally to test. In the `Optional settings` when choosing to run a Docker image, you will need to provide all environment variables for the OpenAI key, AWS Cognito, etc., for the local container to work.
 
